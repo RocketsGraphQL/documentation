@@ -1,0 +1,9 @@
+{
+    "intro": "Intro",
+    "account": "Account",
+    "setup": "Setup",
+    "cra": "Create React App",
+    "authentication":"Authentication",
+    "permissions":"Permissions",
+    "deploy":"Deploy"
+}
