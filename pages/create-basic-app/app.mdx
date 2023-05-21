@@ -1,0 +1,193 @@
+No lets build the todos application. Previously we built the index page that holds the routes to our individual components.
+
+Now let's create the components themselves. Create a `/components` directory at the root level.
+
+Create 2 files:
+
+`/components/login.js`
+
+```js
+import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
+import { auth } from "../utils/rockets";
+
+export function Login(props) {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const history = useHistory();
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+
+    // login
+    try {
+      await auth.signIn({email, password, provider: "local"});
+    } catch (error) {
+      alert("error logging in");
+      console.error(error);
+      return;
+    }
+
+    // redirect back to `/`
+    history.push("/");
+  }
+
+  return (
+    <div>
+      <h1>Login</h1>
+      <form onSubmit={handleSubmit}>
+        <input
+          type="email"
+          placeholder="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        <input
+          type="password"
+          placeholder="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        <button>Login</button>
+      </form>
+    </div>
+  );
+}
+```
+
+`/components/signup`
+
+```js
+import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
+import { auth } from "../utils/rockets";
+
+export function Signup(props) {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const history = useHistory();
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+
+    // signup
+    try {
+      await auth.register({email, password});
+    } catch (error) {
+      alert("error signing up");
+      console.error(error);
+      return;
+    }
+
+  }
+
+  return (
+    <div>
+      <h1>Signup</h1>
+      <form onSubmit={handleSubmit}>
+        <input
+          id="inputUserEmail"
+          type="email"
+          placeholder="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        <input
+          id="inputUserPassword"
+          type="password"
+          placeholder="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        <button id="signupButton">Signup</button>
+      </form>
+    </div>
+  );
+}
+```
+
+Next let's create the App itself. In the App.js copy the following code:
+
+```js
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import { auth } from "./utils/rockets";
+import { gql, useQuery, useMutation, useSubscription } from "@apollo/client";
+
+const GET_TODOS = gql`
+  subscription {
+    todos {
+      id
+      created_at
+      name
+    }
+  }
+`;
+
+const INSERT_TODO = gql`
+  mutation($todo: todos_insert_input!) {
+    insert_todos(objects: [$todo]) {
+      affected_rows
+    }
+  }
+`;
+
+function App() {
+  const { data, loading } = useSubscription(GET_TODOS);
+  const [insertTodo] = useMutation(INSERT_TODO);
+  const [todoName, setTodoName] = useState("");
+
+  console.log("todos: ", data);
+  if (loading) {
+    return <div>Loading</div>;
+  }
+
+  return (
+    <div>
+      <Link to="/login">Login</Link>
+      <div onClick={() => auth.logout()}>Logout</div>
+      <div>
+        <form
+          onSubmit={async (e) => {
+            e.preventDefault();
+
+            try {
+              await insertTodo({
+                variables: {
+                  todo: {
+                    name: todoName,
+                  },
+                },
+              });
+            } catch (error) {
+              console.error(error);
+              return alert("Error creating todo", todoName);
+            }
+            alert("Todo created");
+          }}
+        >
+          <input
+            id="inputTodo"
+            type="text"
+            placeholder="todo"
+            value={todoName}
+            onChange={(e) => setTodoName(e.target.value)}
+          />
+          <button id="createTodo">Create todo</button>
+        </form>
+      </div>
+      {!data || !data.todos || !data.todos.length ? (
+        "no data"
+      ) : (
+        <ul id="todosList">
+          {data.todos.map((todo) => {
+            return <li key={todo.id}>{todo.name}</li>;
+          })}
+        </ul>
+      )}
+    </div>
+  );
+}
+
+export default App;
+```

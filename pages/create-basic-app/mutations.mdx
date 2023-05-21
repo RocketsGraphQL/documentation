@@ -1,0 +1,31 @@
+The following is called a GraphQL Subscription:
+
+
+```js
+const GET_TODOS = gql`
+  subscription {
+    todos {
+      id
+      created_at
+      name
+    }
+  }
+`;
+```
+
+It "subscribes" to our todos table and reflects any changes to that table. This also works when we will add authentication by only returning the records that the user has access to. We will see this later.
+
+
+The following is called a Mutation:
+
+```js
+const INSERT_TODO = gql`
+  mutation($todo: todos_insert_input!) {
+    insert_todos(objects: [$todo]) {
+      affected_rows
+    }
+  }
+`;
+```
+
+It inserts a new record into Todos table. This also works with authentication by "tagging" the user_id to the todos record in the Headers of the request. This is done behind the scenes by rockets-js-sdk.

@@ -3,7 +3,8 @@
     "account": "Account",
     "setup": "Setup",
     "cra": "Create React App",
-    "authentication":"Authentication",
+    "app": "Todos application",
+    "mutations": "Understanding GraphQL Mutations",
     "permissions":"Permissions",
     "deploy":"Deploy"
 }
