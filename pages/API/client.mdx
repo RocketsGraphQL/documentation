@@ -1,0 +1,24 @@
+After you `create-react-app` use the following in `utils/config.js` file to start a client.
+Import from App.js and use the Auth methods
+
+
+```js
+import { createClient } from "@rocketgraphql/rocketgraph-js-sdk";
+
+const config = {
+  baseURL: "https://backend-xxxxx.rocketgraph.app/api",
+};
+
+const { auth } = createClient(config);
+
+export { auth };
+```
+
+
+You should be able to import auth with
+
+```js
+import { auth } from "utils/config";
+```
+
+Refer to next section on how to use Auth.

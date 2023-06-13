@@ -1,0 +1,13 @@
+Use the following methods to signin with Otp
+
+```js
+auth.sendOTP({
+    Phone: "+1-xxxxxxxxxx",
+});
+auth.VerifyOTP({
+    Phone: "+1-xxxxxxxxxx",
+    Otp: "xxxxxxx",
+})
+```
+
+You should see a user created in users table.

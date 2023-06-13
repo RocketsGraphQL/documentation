@@ -3,6 +3,7 @@
     "setup": "Setup",
     "github": "Github",
     "google": "Google",
+    "otp": "OTP",
     "facebook": "Facebook",
     "metamask": "Metamask",
     "passwordless": "Magic Link"

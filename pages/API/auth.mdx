@@ -1,0 +1,74 @@
+Signup methods
+
+```js
+// login
+try {
+    await auth.register({email, password});
+} catch (error) {
+    alert("error signing up");
+    console.error(error);
+    return;
+}
+```
+Signup methods with providers
+
+```js
+// login
+try {
+    const {providerUrl, redirectUrl, success} = await auth.signIn({email, password, provider: "github"});
+    console.log("github data: ", providerUrl, redirectUrl, success);
+    window.location.href = providerUrl;
+} catch (error) {
+    alert("error signing up");
+    console.error(error);
+    return;
+}
+```
+Signup methods with OTP
+
+```js
+try {
+    await auth.sendOTP({ phone });
+} catch (error) {
+    alert("error signing up");
+    console.error(error);
+    return;
+}
+```
+
+```js
+try {
+    await auth.verifyOTP({ phone, otp });
+} catch (error) {
+    alert("error signing up");
+    console.error(error);
+    return;
+}
+```
+Login methods
+
+```js
+
+// login
+try {
+    await auth.signIn({email, password, provider: "local"});
+} catch (error) {
+    alert("error logging in");
+    console.error(error);
+    return;
+}
+```
+
+JWT methods
+
+```js
+// login
+try {
+    // refreshes JWT token
+    await auth.refresh();
+} catch (error) {
+    alert("error signing up");
+    console.error(error);
+    return;
+}
+```
