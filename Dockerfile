@@ -1,4 +1,4 @@
-FROM --platform=linux/amd64 node:16.13.0
+FROM --platform=linux/amd64 node:16.14.0
 MAINTAINER Kaushik Varanasi "kaushik.varanasi1@gmail.com"
 
 USER root
@@ -8,7 +8,6 @@ WORKDIR /app
 COPY . .
 
 RUN yarn
-RUN yarn add sharp
 RUN yarn build
 
 # Expose ports

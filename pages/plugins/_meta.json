@@ -1,0 +1,5 @@
+{
+    "logger": "Postgres Logger",
+    "kafka": "Kafka",
+    "stripe": "Stripe"
+}
