@@ -13,6 +13,11 @@ const config: DocsThemeConfig = {
   footer: {
     text: 'Rocketgraph Docs',
   },
+  useNextSeoProps() {
+    return {
+      titleTemplate: '%s – Rocketgraph'
+    }
+  }
 }
 
 export default config

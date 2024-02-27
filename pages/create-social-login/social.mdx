@@ -1,0 +1,16 @@
+Modify your `/components/signup` to this code
+
+
+For other social logins, use:
+
+Google:
+
+```js
+const {providerUrl, redirectUrl, success} = await auth.signIn({email, password, provider: "google"});
+```
+
+Facebook:
+
+```js
+const {providerUrl, redirectUrl, success} = await auth.signIn({email, password, provider: "facebook"});
+```
